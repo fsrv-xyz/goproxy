@@ -12,11 +12,7 @@ stages:
     - pacman -Syy
     - echo 'Server = https://mirror.fsrv.services/pub/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
     - pacman -Syy --noconfirm go
-    - go build goproxy.go
-  artifacts:
-    when: always
-    paths:
-      - "goproxy"
+    - go build -o goproxy-${GOOS}-${GOARCH} goproxy.go
   image: archlinux
 
 amd64:openbsd:
