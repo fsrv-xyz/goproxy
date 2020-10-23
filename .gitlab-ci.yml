@@ -14,7 +14,7 @@ stages:
     - pacman -Syy --noconfirm go
     - go build -o goproxy-${GOOS}-${GOARCH} goproxy.go
   image: archlinux
-    artifacts:
+  artifacts:
     paths:
       - goproxy-${GOOS}-${GOARCH}
 
