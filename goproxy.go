@@ -17,17 +17,7 @@ type HttpConnectionChannel chan *HttpConnection
 var connChannel = make(HttpConnectionChannel)
 
 func PrintHTTP(conn *HttpConnection) {
-	fmt.Printf("%v %v\n", conn.Request.Method, conn.Request.RequestURI)
-	for k, v := range conn.Request.Header {
-		fmt.Println(k, ":", v)
-	}
-	fmt.Println("==============================")
-	fmt.Printf("HTTP/1.1 %v\n", conn.Response.Status)
-	for k, v := range conn.Response.Header {
-		fmt.Println(k, ":", v)
-	}
-	fmt.Println(conn.Response.Body)
-	fmt.Println("==============================")
+	fmt.Printf("%v => %v %v\n", conn.Request.RemoteAddr, conn.Request.Method, conn.Request.RequestURI)
 }
 
 func HandleHTTP() {
@@ -80,7 +70,6 @@ func (p *Proxy) ServeHTTP(wr http.ResponseWriter, r *http.Request) {
 func main() {
 	//go HandleHTTP()
 	proxy := NewProxy()
-	fmt.Println("==============================")
 	err := http.ListenAndServe(":9823", proxy)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err.Error())
